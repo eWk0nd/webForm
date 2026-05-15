@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>..</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <style>
+            *{
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                background-color: #ffbf02;
+            }
+            body{
+                margin: 0;
+                font-family: 'Roboto', sans-serif;
+                background-color: #f2f2f2;
+            }
+            .form-container {
+                max-width: 450px;
+                width: 95%;
+                margin: 0;
+                padding: 40px;
+                background-color: #fff;
+                box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
+                margin-top: 50px;
+
+            }
+            #form {
+
+            }
+            input {
+                display: block;
+                width: 100%;
+                margin: 0.5rem 0;
+                padding: 0.5rem 0;
+                outline: none;
+                font-size: 1rem;
+                letter-spacing: 0.75px;
+                border: none;
+                border-bottom: 1.5px solid rgb(200, 200, 200);
+                border-radius: 0;
+                transition: 0.2s ease;
+                -webkit-appearance:none ;
+            }
+            input:focus {
+                border-color: #ffbf02;
+            }
+            html {
+                font-size: 16px;
+            }
+            .form-heading {
+                font-size: 100px;
+                margin-bottom: 10rem 0;
+                letter-spacing: 0.75px;
+            }
+            #sbmit {
+                border: none;
+                background-color: #ffbf02;
+                color: #fff;
+                text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+                border-radius: 3px;
+                padding: 0.6rem 0;
+                width: 150px;
+                margin-left: calc(100%-150px);
+                box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.2);
+                cursor: pointer;
+                transition: 0.2s ease;
+                margin-top: 1.5rem;
+                margin-left: 95px;
+            }
+            #sbmit:active {
+                transform: translate(2px,2px);
+                box-shadow: none;
+            }
+            label {
+                display: block;
+                font-size: 0.9rem;
+                letter-spacing: 0.75px;
+                color: rgb(68, 68, 68);
+                transform: translateY(2rem);
+                transition: 0.2s ease
+            }
+            .focused {
+                transform: translateX(-12.5%) translateY(0.2rem) scale(0.75);
+            }
+            .shake {
+    animation: shake 0.3s;
+            }
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+    .tema {
+        width: 150px;
+        height: 150px;
+    }
+        </style>
+    </head>
+    <body>
+        <div class = 'form-container'>
+            <h3 class="form-heading">Форма</h3>
+            <form 
+    action="https://api.web3forms.com/submit" 
+    method="POST" 
+    id="form"
+        >
+        <input
+        type="hidden"
+        name="access_key"
+        value="6280880f-5d50-42cb-8362-5aa9e742590c"
+        >
+                <div class="field">
+                    <label for="name" class = 'focused'>имя</label>
+                    <input type="text" id = 'name' name = 'name'>
+                </div>
+                <div class ="field">
+                    <label for="lastName">фамилия</label>
+                    <input type="lastName" id = 'lastName' name = 'lastName'>
+                </div>
+                <div class="field">
+                    <label for="email">email</label>
+                    <input type="email" id = 'email' name = 'email'>
+                </div>
+                <input type="submit" id = 'sbmit'>
+            </form>
+        </div>
+        <input type="button" class = 'tema'>
+        
+    </body>
+    <script>
+        var inputs = [].slice.call(document.querySelectorAll('input')) 
+
+       
+
+        inputs.forEach(function(input){
+            if (input.getAttribute('type') !== 'submit') {
+                console.log(input)
+                input.addEventListener('focusin',focusinInputHandler,false)
+                input.addEventListener('focusout',focusoutInputHandler,false)
+
+            }
+        })
+        function focusinInputHandler() {
+            var label = document.querySelector('label[for ="' + this.id + '"]')
+            /*console.log(label)
+            console.log(this.id+" focus in")*/
+            label.classList.add('focused')
+        }
+        function focusoutInputHandler() {
+            var label = document.querySelector('label[for ="' + this.id + '"]')
+            if (this.value == '') {
+                label.classList.remove('focused')
+            }
+            //console.log(label)
+            //console.log(this.id+" focus out")
+
+        }
+         const email = document.getElementById('email')
+        email.addEventListener('input',function(){
+            if (email == '') {
+                email.style.borderColor='green'
+            } else {
+                email.style.borderColor='red'
+            }
+        })
+        const form = document.getElementById('form')
+form.addEventListener('submit', function(e){
+
+    if(name.value === '' || email.value === ''){
+        e.preventDefault()
+
+        form.classList.add('shake')
+
+        setTimeout(() => {
+            form.classList.remove('shake')
+        },300)
+    }
+
+})
+    </script>
+</html>
